@@ -13,38 +13,49 @@ describe ConnectFour do
       end
     end
 
-    context 'initialize the identifier for the ranks/files of the board' do
+    context 'initialize the identifier for the columns of the board' do
       subject(:game){described_class.new}   
       it 'the files for the board should display a-g' do
-        expect(game.files).to eq(['A','B','C','D','E','F','G'])
-      end
-
-      it 'the ranks for the board should display 1-6' do
-        expect(game.ranks).to eq([1,2,3,4,5,6])
+        expect(game.columns).to eq([1,2,3,4,5,6,7])
       end
     end
   end
 
-  describe '#convert files' do
-    context 'convert the files location in alphabetic form and converts to numeric' do
+  describe '#convert columns' do
+    context 'convert the entered column to the index' do
       subject(:game){described_class.new}
-      it 'converts A to 0' do
-        expect(game.files_convert('A')).to eq(0)
+      it 'converts 1 to 0' do
+        expect(game.files_convert(1)).to eq(0)
       end
 
-      it 'converts G to 6' do
-        expect(game.files_convert('G')).to eq(6)
+      it 'converts 7 to 6' do
+        expect(game.files_convert(7)).to eq(6)
+      end
+    end
+  end
+
+  describe '#verify coordinates' do
+    context 'when a player inputs correct coordinates' do
+      subject(:game){described_class.new}
+      xit 'returns true' do
+        expect(game.verify_coordinates([2,2])).to eq(true)
       end
     end
 
-    context 'returns nil for something besies A-G entry' do
+    before do
+      allow(phrase).to receive(:puts)
+    end
+
+    context 'when the column is full/invalid' do
       subject(:game){described_class.new}
-      it 'returns P to nil' do
-        expect(game.files_convert('P')).to be_falsey
+      xit 'outputs error message when coords are out of range' do
+        expect(phrase).to receieve(:puts).with('Column for placement was invalid. Please enter a valid column (1-7)')
+        phrase.verify_coordinates([1,nil])
       end
 
-      it 'returns 3 to nil' do
-        expect(game.files_convert(3)).to be_falsey
+      xit 'outputs error message when the column is full of placements' do
+        expect(phrase).to receive(:puts).with('Column already full. Please try again')
+        phrase.verify_coordinates([2,2])
       end
     end
   end

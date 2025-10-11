@@ -1,13 +1,20 @@
 class ConnectFour
-  attr_accessor :board, :ranks, :files
+  attr_accessor :board, :columns
 
   def initialize
-    @board = (1..6).to_h {|i| [i,Array.new(7,"\u25EF")]}
-    @ranks = [1,2,3,4,5,6]
-    @files = ['A','B','C','D','E','F','G']
+    @board = Array.new(6,Array.new(7,"\u25EF"))
+    @columns = (1..7).to_a
   end
 
   def files_convert(file)
-    files.index(file)
+    columns.index(file)
+  end
+
+  def get_coordinates
+    
+  end
+
+  def verify_coordinates(coords)
+    
   end
 end
