@@ -10,11 +10,22 @@ class ConnectFour
     columns.index(file)
   end
 
-  def get_coordinates
+  def get_placement
     
   end
 
-  def verify_coordinates(coords)
-    
+  def verify_placement(coords)
+    unless columns.include?(coords)
+      puts "Column for placement was invalid. Please enter a valid column (1-7)"
+      return
+    end
+
+    board.each do |row|
+      if row[coords] == "\u25EF"
+        return true
+      end
+    end
+
+    puts "Column already full. Please try again"
   end
 end

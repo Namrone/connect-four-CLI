@@ -34,28 +34,26 @@ describe ConnectFour do
     end
   end
 
-  describe '#verify coordinates' do
-    context 'when a player inputs correct coordinates' do
+  describe '#verify placement' do
+    context 'when a player inputs correct placement' do
       subject(:game){described_class.new}
-      xit 'returns true' do
-        expect(game.verify_coordinates([2,2])).to eq(true)
+      it 'returns true' do
+        expect(game.verify_placement(2)).to eq(true)
       end
     end
 
-    before do
-      allow(phrase).to receive(:puts)
-    end
-
+    
     context 'when the column is full/invalid' do
       subject(:game){described_class.new}
-      xit 'outputs error message when coords are out of range' do
-        expect(phrase).to receieve(:puts).with('Column for placement was invalid. Please enter a valid column (1-7)')
-        phrase.verify_coordinates([1,nil])
+      it 'outputs error message when coords are out of range' do
+        expect{game.verify_placement(nil)}.to output("Column for placement was invalid. Please enter a valid column (1-7)\n").to_stdout
       end
 
-      xit 'outputs error message when the column is full of placements' do
-        expect(phrase).to receive(:puts).with('Column already full. Please try again')
-        phrase.verify_coordinates([2,2])
+      it 'outputs error message when the column is full of placements' do
+        game.board.each do |row|
+          row[2] = "X"
+        end
+        expect{game.verify_placement(2)}.to output("Column already full. Please try again\n").to_stdout
       end
     end
   end
