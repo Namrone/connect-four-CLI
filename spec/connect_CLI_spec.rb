@@ -37,8 +37,9 @@ describe ConnectFour do
   describe '#verify placement' do
     context 'when a player inputs correct placement' do
       subject(:game){described_class.new}
-      it 'returns true' do
-        expect(game.verify_placement(2)).to eq(true)
+      it 'increases the round count' do
+        game.verify_placement(2)
+        expect(game.round).to eq(1)
       end
     end
 
@@ -54,6 +55,28 @@ describe ConnectFour do
           row[2] = "X"
         end
         expect{game.verify_placement(2)}.to output("Column already full. Please try again\n").to_stdout
+      end
+    end
+  end
+
+  describe '#get placement' do
+    context 'when a player enters an appropriate entry' do
+      subject(:game){described_class.new}
+      it "doesn't loop" do
+        valid_input = "3\n"
+        allow(game).to receive(:gets).and_return(valid_input)
+        game.get_placement
+        expect(game).to have_received(:gets).once
+      end
+    end
+  end
+
+  describe '#swap player' do
+    context 'When a player enters a valid column then swaps to the other player' do
+      subject(:game){described_class.new}
+      it 'switches to the next player' do
+        game.verify_placement(2)
+        expect(game.swap_player).to eq("\u26AB")
       end
     end
   end
