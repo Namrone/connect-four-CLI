@@ -7,6 +7,7 @@ class ConnectFour
     @round = 0
     @players = ["\u26D2","\u26AB"]
     @current_player = "\u26D2"
+    @most_recent_move = nil
   end
 
   def files_convert(file)
@@ -37,5 +38,26 @@ class ConnectFour
 
   def swap_player
     @current_player = @players[round%2]
+  end
+
+  def end_game?
+    
+  end
+
+  def row_check?(play)
+    repeats = 0
+    prev_cell = "\u26D2"
+    @board[play[0]].each do |cell|
+      if cell == "\u26D2"
+        repeats = 0
+      elsif prev_cell == cell
+        repeats += 1
+      else
+        repeats = 1
+      end
+      return true if repeats == 4
+      prev_cell = cell
+    end
+    return false
   end
 end

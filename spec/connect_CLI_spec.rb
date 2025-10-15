@@ -80,4 +80,49 @@ describe ConnectFour do
       end
     end
   end
+
+  
+  describe '#row check?' do
+    context 'When there is no 4 in a row then the game continues and returns false' do
+      subject(:game){described_class.new}
+      it 'checks row with only 2 of the same' do
+        game.board[2][2] = "\u26D2"
+        game.board[2][3] = "\u26D2"
+        expect(game.row_check?([2,3])).to be_falsey
+      end
+    end
+  end
+
+  describe '#column check?' do
+    context 'When there is no 4 in a row then the game continues and returns false' do
+      subject(:game){described_class}
+      xit 'checks column with 0 of the same' do
+        expect(game.end_game?([2,3])).to be_falsey
+      end
+    end
+  end
+
+  describe '#diagonal check check?' do
+    context 'When there is no 4 in a row then the game continues and returns false' do
+      subject(:game){described_class}
+      xit 'checks bottom left to top right with 3 of the same' do
+        game.board[2][2] = "\u26AB"
+        game.board[3][3] = "\u26AB"
+        game.board[4][4] = "\u26AB"
+        expect(game.end_game?([3,3])).to be_falsey
+      end
+    end
+  end
+
+  describe '#cross check check?' do
+    context 'When there is no 4 in a row then the game continues and returns false' do
+      xit 'checks bottom right to top left 1 of the same' do
+        game.board[2][2] = "\u26AB"
+        expect(game.end_game?([2,2])).to be_falsey
+      end
+    end
+  end
+
+  describe '#end game?' do
+  end
 end
