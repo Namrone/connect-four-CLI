@@ -1,5 +1,5 @@
 class ConnectFour
-  attr_accessor :board, :columns, :round, :player_turn
+  attr_accessor :board, :columns, :round, :player_turn, :players, :current_player
 
   def initialize
     @board = Array.new(6,Array.new(7,"\u25EF"))

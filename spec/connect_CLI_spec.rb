@@ -136,6 +136,11 @@ describe ConnectFour do
         no_win = ["\u25EF","\u25EF","\u26AB","\u25EF","\u25EF"]
         expect(game.end_game?(no_win)).to be_falsey
       end
+
+      it 'There is no 4 in a row even though there"s 4 of the same kind' do
+        no_win = ["\u26AB","\u26AB","\u26AB","\u25EF","\u26AB","\u25EF"]
+        expect(game.end_game?(no_win)).to be_falsey
+      end
     end
   end
 end
