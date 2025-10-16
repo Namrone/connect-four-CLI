@@ -40,15 +40,75 @@ class ConnectFour
     @current_player = @players[round%2]
   end
 
-  def end_game?
-    
+  def row_arr(play)
+    @board[play[1]]
   end
 
-  def row_check?(play)
+  def column_arr(play)
+    column = Array.new
+
+    @board.each do |row|
+      column << row[play[0]]
+    end
+
+    column
+  end
+
+  #creates array from bottom left to top right from last played location
+  def diagonal_arr(play)
+    cells_arr = Array.new
+
+    file = play[0]
+    ranks = play[1]
+
+    until ranks < 0
+      cells_arr.prepend(@board[ranks][file])
+      file -= 1
+      ranks -= 1
+    end
+
+    file = play[0]
+    ranks = play[1]
+    
+    until file >= 5
+      file += 1
+      ranks += 1
+      cells_arr << @board[ranks][file]
+    end
+    cells_arr
+  end
+
+  #creates array from bottom right to top left from last played location
+  def cross_arr(play)
+    cells_arr = Array.new
+
+    file = play[0]
+    ranks = play[1]
+
+    until file < 0
+      cells_arr.prepend(@board[ranks][file])
+      ranks += 1
+      file -= 1
+    end
+
+    file = play[0]
+    ranks = play[1]
+
+    until ranks <= 0
+      ranks -= 1
+      file += 1
+      cells_arr << @board[ranks][file]
+    end
+
+    cells_arr
+  end
+
+  def end_game?(cells_arr)
     repeats = 0
-    prev_cell = "\u26D2"
-    @board[play[0]].each do |cell|
-      if cell == "\u26D2"
+    prev_cell = "\u25EF"
+
+    cells_arr.each do |cell|
+      if cell == "\u25EF"
         repeats = 0
       elsif prev_cell == cell
         repeats += 1
@@ -58,6 +118,7 @@ class ConnectFour
       return true if repeats == 4
       prev_cell = cell
     end
+
     return false
   end
 end

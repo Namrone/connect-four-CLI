@@ -82,47 +82,60 @@ describe ConnectFour do
   end
 
   
-  describe '#row check?' do
+  describe '#row arr' do
     context 'When there is no 4 in a row then the game continues and returns false' do
       subject(:game){described_class.new}
       it 'checks row with only 2 of the same' do
         game.board[2][2] = "\u26D2"
         game.board[2][3] = "\u26D2"
-        expect(game.row_check?([2,3])).to be_falsey
+        expect(game.row_arr([3,2])).to eq(game.board[2])
       end
     end
   end
 
-  describe '#column check?' do
+  describe '#column arr' do
     context 'When there is no 4 in a row then the game continues and returns false' do
-      subject(:game){described_class}
-      xit 'checks column with 0 of the same' do
-        expect(game.end_game?([2,3])).to be_falsey
+      subject(:game){described_class.new}
+      it 'checks column with 0 of the same' do
+        expect(game.column_arr([2,3])).to eq(["\u25EF","\u25EF","\u25EF","\u25EF","\u25EF","\u25EF"])
       end
     end
   end
 
-  describe '#diagonal check check?' do
+  describe '#diagonal arr' do
     context 'When there is no 4 in a row then the game continues and returns false' do
-      subject(:game){described_class}
-      xit 'checks bottom left to top right with 3 of the same' do
+      subject(:game){described_class.new}
+      it 'checks bottom left to top right with 3 of the same' do
         game.board[2][2] = "\u26AB"
         game.board[3][3] = "\u26AB"
         game.board[4][4] = "\u26AB"
-        expect(game.end_game?([3,3])).to be_falsey
+        expect(game.diagonal_arr([3,3])).to eq(["\u25EF","\u25EF","\u26AB","\u26AB","\u26AB","\u25EF"])
       end
     end
   end
 
-  describe '#cross check check?' do
+  describe '#cross arr' do
     context 'When there is no 4 in a row then the game continues and returns false' do
-      xit 'checks bottom right to top left 1 of the same' do
+      subject(:game){described_class.new}
+      it 'checks bottom right to top left 1 of the same' do
         game.board[2][2] = "\u26AB"
-        expect(game.end_game?([2,2])).to be_falsey
+        expect(game.cross_arr([2,2])).to eq(["\u25EF","\u25EF","\u26AB","\u25EF","\u25EF"])
       end
     end
   end
 
   describe '#end game?' do
+    context 'When receiving an array goes through and checks if a player has 4 in a row' do
+      subject(:game){described_class.new}
+      it 'There is a 4 in a row' do
+        four_in_a_row = ["\u25EF","\u26AB","\u26AB","\u26AB","\u26AB","\u25EF"]
+        expect(game.end_game?(four_in_a_row)).to be_truthy
+      end
+
+      it 'There is no 4 in a row' do
+        no_win = ["\u25EF","\u25EF","\u26AB","\u25EF","\u25EF"]
+        expect(game.end_game?(no_win)).to be_falsey
+      end
+    end
   end
 end
